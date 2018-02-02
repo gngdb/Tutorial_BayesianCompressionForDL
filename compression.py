@@ -108,7 +108,7 @@ def _compute_compression_rate(vars, in_precision=32., dist_fun=lambda x: np.max(
     sizes = [v.size for v in vars]
     # compute
     significant_bits = [float_precisions(v, dist_fun, layer=k + 1) for k, v in enumerate(vars)]
-    exponent_bit = np.ceil(np.log2(np.log2(overflow) + 1.) + 1.)
+    exponent_bit = np.ceil(np.log2(np.log2(overflow + 1.) + 1.))
     total_bits = [1. + exponent_bit + sb for sb in significant_bits]
     OUT_BITS = np.sum(np.asarray(sizes) * np.asarray(total_bits))
     return nb_weights / np.sum(sizes), IN_BITS / OUT_BITS, significant_bits, exponent_bit
